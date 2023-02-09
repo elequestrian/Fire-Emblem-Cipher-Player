@@ -21,9 +21,10 @@ namespace Com.SakuraStudios.FECipherPlayer
 
         }
 
+        // 
         public void DisplayCard(BasicCard card)
         {
-            //displayImage.sprite = card.GetCardSprite();
+            displayImage.sprite = card.CardSprite;
         }
     }
 }
