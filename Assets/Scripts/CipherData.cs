@@ -7,33 +7,27 @@ namespace Com.SakuraStudios.FECipherPlayer
 {
     public static class CipherData
     {
-        //NOTE: Be sure to change the size of the below arrays in the exisiting card data as well as this information
-        //if a size change is needed.  Otherwise, errors may occur.
+        // NOTE: Be sure to change the size of the below arrays in the exisiting card data as well as this information
+        // if a size change is needed.  Otherwise, errors may occur.
 
-        public static int NumColors = 8;
         public enum ColorsEnum { Red, Blue, White, Black, Green, Purple, Yellow, Brown }
 
-        public static int NumGenders = 2;
         public enum GendersEnum { Male, Female }
 
-        public static int NumWeapons = 10;
         public enum WeaponsEnum { Sword, Lance, Axe, Bow, Tome, Staff, Brawl, Dragonstone, Knife, Fang }
 
-        public static int NumTypes = 6;
-        public enum TypesEnum { Armored, Flier, Beast, Dragon, Mirage, Monster }
+        public enum UnitTypesEnum { Armored, Flier, Beast, Dragon, Mirage, Monster }
 
-        public static int NumRanges = 3;
         public enum RangesEnum { Range1, Range2, Range3 }
 
         //Creating a skill enum for each card so that the computer can know what types of skills are on each card.
-        public static int NumSkillTypes = 15;
-        public enum SkillTypeEnum
+        public enum SkillTypesEnum
         {
             Support, ClassChange, Formation, LevelUp, Union, CarnageForm, Bond, DragonVein, Hero, Twin, Increase,
             Awakening, DragonBlood, LegendaryItem, CrestPower
         }
 
         //This enum keeps track of the current phase in the game.
-        public enum PhaseEnum { Beginning, Bond, Deployment, Action, End }
+        public enum PhasesEnum { Beginning, Bond, Deployment, Action, End }
     }
 }

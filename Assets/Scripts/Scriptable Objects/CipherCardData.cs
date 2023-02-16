@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,18 +20,18 @@ namespace Com.SakuraStudios.FECipherPlayer
         // Tagging cardSkills with the multiline attribute to allow for easier readability in the editor.
         [Multiline]
         public string[] cardSkills;
-        public bool[] skillTypes = new bool[CipherData.NumSkillTypes];
+        public bool[] skillTypes = new bool[Enum.GetNames(typeof(CipherData.SkillTypesEnum)).Length];
         public string charName;
         public string classTitle;
         public int deploymentCost;
         public bool canPromote;
         public int promotionCost;
-        public bool[] cardColor = new bool[CipherData.NumColors];
-        public bool[] charGender = new bool[CipherData.NumGenders];
-        public bool[] charWeaponType = new bool[CipherData.NumWeapons];
-        public bool[] unitTypes = new bool[CipherData.NumTypes];
+        public bool[] cardColor = new bool[Enum.GetNames(typeof(CipherData.ColorsEnum)).Length];
+        public bool[] charGender = new bool[Enum.GetNames(typeof(CipherData.GendersEnum)).Length];
+        public bool[] charWeaponType = new bool[Enum.GetNames(typeof(CipherData.WeaponsEnum)).Length];
+        public bool[] unitTypes = new bool[Enum.GetNames(typeof(CipherData.UnitTypesEnum)).Length];
         public int baseAttack;
         public int baseSupport;
-        public bool[] baseRange = new bool[CipherData.NumRanges];
+        public bool[] baseRange = new bool[Enum.GetNames(typeof(CipherData.RangesEnum)).Length];
     }
 }

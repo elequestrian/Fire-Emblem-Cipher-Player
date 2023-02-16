@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace Com.SakuraStudios.FECipherPlayer
 {
@@ -52,6 +53,13 @@ namespace Com.SakuraStudios.FECipherPlayer
         SerializedProperty baseSupport;
         SerializedProperty baseRange;
 
+        bool skillFoldout = false;
+        bool colorFoldout = false;
+        bool genderFoldout = false;
+        bool weaponFoldout = false;
+        bool unitFoldout = false;
+        bool rangeFoldout = false;
+
         void OnEnable()
         {
             cardNumber = serializedObject.FindProperty("cardNumber"); ;
@@ -84,7 +92,7 @@ namespace Com.SakuraStudios.FECipherPlayer
             EditorGUILayout.PropertyField(charQuote);
             EditorGUILayout.PropertyField(cardIllustrator);
             EditorGUILayout.PropertyField(cardSkills, true, GUILayout.ExpandHeight(true));
-            ShowCipherList(skillTypes, typeof(CipherData.SkillTypeEnum));
+            skillFoldout = ShowCipherList(skillFoldout, skillTypes, typeof(CipherData.SkillTypesEnum));
 
             EditorGUILayout.PropertyField(charName);
             EditorGUILayout.PropertyField(classTitle);
@@ -92,39 +100,41 @@ namespace Com.SakuraStudios.FECipherPlayer
             EditorGUILayout.PropertyField(canPromote);
             EditorGUILayout.PropertyField(promotionCost);
 
-            ShowColorList(cardColor);
-            ShowGenderList(charGender);
-            ShowWeaponList(charWeaponType);
-            ShowUnitList(unitTypes);
+            colorFoldout = ShowCipherList(colorFoldout, cardColor, typeof(CipherData.ColorsEnum));
+            genderFoldout = ShowCipherList(genderFoldout, charGender, typeof(CipherData.GendersEnum));
+            weaponFoldout = ShowCipherList(weaponFoldout, charWeaponType, typeof(CipherData.WeaponsEnum));
+            unitFoldout = ShowCipherList(unitFoldout, unitTypes, typeof(CipherData.UnitTypesEnum));
 
             EditorGUILayout.PropertyField(baseAttack);
             EditorGUILayout.PropertyField(baseSupport);
 
-            ShowRangeList(baseRange);
+            rangeFoldout = ShowCipherList(rangeFoldout, baseRange, typeof(CipherData.RangesEnum));
 
 
             serializedObject.ApplyModifiedProperties();
         }
 
-        public static void ShowCipherList(SerializedProperty list, Type cipherEnum)
+        // This method helps draw all boolean arrays for the different card attributes consistently.
+        private bool ShowCipherList(bool foldout, SerializedProperty list, Type cipherEnum)
         {
             //check in case we try to show an non-array or pass in a Type that's not an Enum!
             if (!list.isArray)
             {
                 EditorGUILayout.HelpBox(list.name + " is neither an array nor a list!", MessageType.Error);
-                return;
+                return foldout;
             }
             else if (!cipherEnum.IsEnum)
             {
                 EditorGUILayout.HelpBox(cipherEnum.Name + " is not an Enum!", MessageType.Error);
-                return;
+                return foldout;
             }
 
-            EditorGUILayout.PropertyField(list);
-
-            EditorGUI.indentLevel += 1;
-            if (list.isExpanded)
+            //Begins a foldout group and returns the value based on user input.
+            foldout = EditorGUILayout.BeginFoldoutHeaderGroup(foldout, list.displayName);
+            
+            if (foldout)
             {
+                EditorGUI.indentLevel += 1;
                 SerializedProperty size = list.FindPropertyRelative("Array.size");
                 EditorGUILayout.PropertyField(size);
                 string[] enumNames = Enum.GetNames(cipherEnum);
@@ -136,30 +146,38 @@ namespace Com.SakuraStudios.FECipherPlayer
 
                     EditorGUILayout.PropertyField(list.GetArrayElementAtIndex(i), new GUIContent(name));
                 }
+                EditorGUI.indentLevel -= 1;
             }
 
-            EditorGUI.indentLevel -= 1;
+            // Be sure to end the Foldout Group.
+            EditorGUILayout.EndFoldoutHeaderGroup();
+
+            return foldout;
         }
 
 
 
-
+        /*
 
         //Custom Editor for the Color List 
-        public static void ShowColorList(SerializedProperty list)
+        public static bool ShowColorList(bool colorFoldout, SerializedProperty list)
         {
             //check in case we try to show an non-array!
             if (!list.isArray)
             {
                 EditorGUILayout.HelpBox(list.name + " is neither an array nor a list!", MessageType.Error);
-                return;
+                return colorFoldout;
             }
 
-            EditorGUILayout.PropertyField(list);
+            colorFoldout = EditorGUILayout.BeginFoldoutHeaderGroup(colorFoldout, list.displayName);
 
-            EditorGUI.indentLevel += 1;
-            if (list.isExpanded)
+
+            //EditorGUILayout.PropertyField(list, false);
+
+            
+            if (colorFoldout)
             {
+                EditorGUI.indentLevel += 1;
                 SerializedProperty size = list.FindPropertyRelative("Array.size");
                 EditorGUILayout.PropertyField(size);
                 for (int i = 0; i < list.arraySize; i++)
@@ -170,9 +188,12 @@ namespace Com.SakuraStudios.FECipherPlayer
 
                     EditorGUILayout.PropertyField(list.GetArrayElementAtIndex(i), new GUIContent(name));
                 }
+                EditorGUI.indentLevel -= 1;
             }
 
-            EditorGUI.indentLevel -= 1;
+            EditorGUILayout.EndFoldoutHeaderGroup();
+
+            return colorFoldout;
         }
 
         //Custom Editor for the Gender List 
@@ -324,5 +345,6 @@ namespace Com.SakuraStudios.FECipherPlayer
 
             EditorGUI.indentLevel -= 1;
         }
+        */
     }
 }
