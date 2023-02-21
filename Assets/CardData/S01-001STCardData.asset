@@ -12,21 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 535506115be01374e93de5b53281d39d, type: 3}
   m_Name: S01-001STCardData
   m_EditorClassIdentifier: 
-  cardNumber: 
-  charTitle: 
-  charQuote: 
-  cardIllustrator: 
-  cardSkills: []
+  cardNumber: S01-001
+  charTitle: Star and Savior
+  charQuote: \"I will crush Dolhr. I swear it on this emblem of fire!\"
+  cardIllustrator: Yusuke Kozaki
+  cardSkills:
+  - Prince of Light [TRIGGER] [ONCE PER TURN] When you deploy an ally with a Deployment
+    Cost 2 or lower, you may choose 1 enemy in the Back Line, and move them.
+  - Falchion [ALWAYS] If this unit is attacking a <Dragon>, this unit gains +20 attack.
   skillTypes: 000000000000000000000000000000
-  charName: 
-  classTitle: 
-  deploymentCost: 0
-  canPromote: 0
-  promotionCost: 0
-  cardColor: 0000000000000000
-  charGender: 0000
-  charWeaponType: 00000000000000000000
+  charName: Marth
+  classTitle: Lodestar
+  deploymentCost: 4
+  canPromote: 1
+  promotionCost: 3
+  cardColor: 0100000000000000
+  charGender: 0100
+  charWeaponType: 01000000000000000000
   unitTypes: 000000000000
-  baseAttack: 0
-  baseSupport: 0
-  baseRange: 000000
+  baseAttack: 70
+  baseSupport: 20
+  baseRange: 010000
