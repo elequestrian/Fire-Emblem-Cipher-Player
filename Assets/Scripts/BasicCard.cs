@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,6 +24,21 @@ namespace Com.SakuraStudios.FECipherPlayer
         protected int localBaseAttack;
         protected int localBaseSupport;
         protected bool[] localBaseRangeArray;
+
+
+        #endregion
+
+        #region Public Variables
+
+        // Used to modify a card's attack power outside of battle (with the effects of skills, etc.)
+        // Made public since card skills can adjust attack power.
+        public int attackModifier = 0;                      
+        //public int battleModifier = 0;                      //Used to update a card's attack power in battle (with supports, etc.)  Is reset after battle?
+        public int supportModifier = 0;                     //NOTE: Not fully integrated.  Needs to have a way to reset similar to attackModifier.
+                                                            //Used to modify a card's support power with the effects of skills, etc. Reset once the card leaves the field.
+
+        // A List that holds information about the skills impacting a card.
+        protected List<string> skillChangeTracker = new List<string>();
 
         #endregion
 
@@ -57,6 +73,35 @@ namespace Com.SakuraStudios.FECipherPlayer
         public virtual int BaseSupport { get { return localBaseSupport; } }
         public virtual bool[] BaseRangeArray { get { return localBaseRangeArray; } }
 
+        /// <summary>
+        /// This property returns all current information about skills affecting the card.
+        /// </summary> 
+        public List<string> SkillChangeTracker { get { return skillChangeTracker; } }
+
+        public virtual int CurrentAttackValue { get { return BaseAttack + attackModifier; } }       //Returns the current attack stat including skill modifiers.
+        public virtual int CurrentSupportValue { get { return BaseSupport + supportModifier; } }    //Returns the current support stat including skill modifiers.
+
+        // Property returns a List of the string names of the colors on this card.
+        public virtual List<string> CardColorList
+        {
+            get
+            {
+                string[] cipherColorArray = Enum.GetNames(typeof(CipherData.ColorsEnum));
+                List<string> colorNames = new List<string>(cipherColorArray.Length);
+
+                //Loops through each possible color
+                for (int i = 0; i < CardColorArray.Length; i++)
+                {
+                    //if the color is on the card then add the color name to the list
+                    if (CardColorArray[i])
+                    {
+                        colorNames.Add(cipherColorArray[i]);
+                    }
+                }
+
+                return colorNames;
+            }
+        }
 
         #endregion
 
@@ -69,7 +114,12 @@ namespace Com.SakuraStudios.FECipherPlayer
         {
             SpriteRenderer renderer = GetComponent<SpriteRenderer>();
             cardSprite = renderer.sprite;
-            
+
+            if (cardData == null)
+            {
+                Debug.LogError(gameObject.name + " has not had it's CipherCardData field assigned in the inspector.");
+            }
+
             // Set local values based on standard card data.
             // We need to clone the arrays to make sure we aren't just copying a reference, but creating a new distinct array we can mess with.
             localDeploymentCost = cardData.deploymentCost;

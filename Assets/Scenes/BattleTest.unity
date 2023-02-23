@@ -1798,6 +1798,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa64a40342fc65741a5b86dbee9f9997, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cardData: {fileID: 11400000, guid: 87c4f3311f02d3d4cacb3a1dd650ad11, type: 2}
+  attackModifier: 0
+  supportModifier: 0
 --- !u!61 &1839986946
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1916,6 +1919,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   displayImage: {fileID: 862135952}
+  defaultSprite: {fileID: 21300000, guid: 0a8693b2e3de22048b57a2af89e6f83e, type: 3}
+  displayText: {fileID: 1226313467}
+  scrollbar: {fileID: 483269690}
 --- !u!1 &1960198572
 GameObject:
   m_ObjectHideFlags: 0

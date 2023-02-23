@@ -1,8 +1,5 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Dynamic;
 using System.Text;
 using TMPro;
 using UnityEngine;
@@ -63,7 +60,7 @@ namespace Com.SakuraStudios.FECipherPlayer
 
         #region Private Methods
 
-        /*
+        
 
         //This method formats a card's unique information to be displayed by the CardReader class.
         //This means the CardReader doesn't need to know what card it is looking at to display the proper information.
@@ -220,25 +217,18 @@ namespace Com.SakuraStudios.FECipherPlayer
                     //Check if the unit type was on the original card data and if not print it in green text.
                     if (card.GetCardData.unitTypes[i])
                     {
-                        cardInfo.Append("/").Append(((CipherData.TypesEnum)i).ToString());
+                        cardInfo.Append("/").Append(((CipherData.UnitTypesEnum)i).ToString());
                     }
                     else
                     {
-                        cardInfo.Append("/<color=green>").Append(((CipherData.TypesEnum)i).ToString()).Append("</color>");
+                        cardInfo.Append("/<color=green>").Append(((CipherData.UnitTypesEnum)i).ToString()).Append("</color>");
                     }
                 }
             }
 
             cardInfo.Append("\n");
 
-            if (card.CurrentAttackValue == card.GetCardData.baseAttack)
-            {
-                cardInfo.Append(card.CurrentAttackValue).Append(" ATK/");
-            }
-            else
-            {
-                cardInfo.Append("<color=green>").Append(card.CurrentAttackValue).Append("</color> ATK/");
-            }
+            cardInfo.Append(ColorTextIfDifferent(card.CurrentAttackValue.ToString(), card.GetCardData.baseAttack.ToString())).Append(" ATK/");
 
             if (card.CurrentSupportValue == card.GetCardData.baseSupport)
             {
@@ -282,19 +272,26 @@ namespace Com.SakuraStudios.FECipherPlayer
             return cardInfo.ToString();
         }
 
-        */
 
         /// <summary>
-        /// This method prints the given text in green if it differs from given reference text.
+        /// This method prints the given text in a specified color if it differs from given reference text.
         /// </summary>
-        /// <param name="textToPrint">the text that will be printed either in green or regular color.</param>
-        /// <param name="referenceText">the text to compare to the printed text.  If the two are different, the printed text will be in green.</param>
-        private string PrintTextGreenIfDifferent(string textToPrint, string referenceText)
+        /// <param name="textToPrint">the text that will be printed either in the given color or as normal.</param>
+        /// <param name="referenceText">the text to compare to the printed text.  If the two are different, the printed text will be in the given color.</param>
+        /// <param name="color">text to specify the color.  supported inputs are; defaults to green.</param>
+        private string ColorTextIfDifferent(string textToPrint, string referenceText, string color = "green")
         {
+            if (!color.Equals("green") && !color.Equals("black") && !color.Equals("blue") && !color.Equals("orange") && !color.Equals("purple") && !color.Equals("red")
+                && !color.Equals("white") && !color.Equals("yellow"))
+            {
+                Debug.LogWarning("InfoPanelController.ColorTextIfDifferent() does not recognize \"" + color + "\" as a valid color.  Text will be rended in green if different.");
+                color = "green";
+            }
+
             if (textToPrint == referenceText)
                 return textToPrint;
             else
-                return "<color=green>" + textToPrint + "</color>";
+                return "<color=" + color + ">" + textToPrint + "</color>";
         }
 
         //Formats a card's range information nicely.
