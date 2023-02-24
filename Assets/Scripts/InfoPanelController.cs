@@ -71,28 +71,11 @@ namespace Com.SakuraStudios.FECipherPlayer
             cardInfo.Append(card.CardNumber + " " + card.CharName + ": " + card.CharTitle +
                 "\n" + card.ClassTitle + "/Cost: ");
 
-            if (card.DeploymentCost == card.GetCardData.deploymentCost)
-            {
-                cardInfo.Append(card.DeploymentCost);
-            }
-            else
-            {
-                cardInfo.Append("<color=green>" + card.DeploymentCost + "</color>");
-            }
+            cardInfo.Append(ColorTextIfDifferent(card.DeploymentCost.ToString(), card.GetCardData.deploymentCost.ToString()));
 
             if (card.Promotable)
-            {
-                cardInfo.Append("(");
-                if (card.PromotionCost == card.GetCardData.promotionCost)
-                {
-                    cardInfo.Append(card.PromotionCost);
-                }
-                else
-                {
-                    cardInfo.Append("<color=green>" + card.PromotionCost + "</color>");
-                }
-                cardInfo.Append(")");
-            }
+                cardInfo.Append("(").Append(ColorTextIfDifferent(card.PromotionCost.ToString(), card.GetCardData.promotionCost.ToString())).Append(")");
+
             cardInfo.Append("\n");
 
             //adds a well-formatted list of the colors on the card to the cardInfo.
@@ -229,15 +212,8 @@ namespace Com.SakuraStudios.FECipherPlayer
             cardInfo.Append("\n");
 
             cardInfo.Append(ColorTextIfDifferent(card.CurrentAttackValue.ToString(), card.GetCardData.baseAttack.ToString())).Append(" ATK/");
-
-            if (card.CurrentSupportValue == card.GetCardData.baseSupport)
-            {
-                cardInfo.Append(card.CurrentSupportValue).Append(" SUPP/");
-            }
-            else
-            {
-                cardInfo.Append("<color=green>").Append(card.CurrentSupportValue).Append("</color> SUPP/");
-            }
+            cardInfo.Append(ColorTextIfDifferent(card.CurrentSupportValue.ToString(), card.GetCardData.baseSupport.ToString())).Append(" SUPP/");
+            
 
             //adds a card's range to the cardInfo
             cardInfo.Append(PrintRange(card));
@@ -278,7 +254,7 @@ namespace Com.SakuraStudios.FECipherPlayer
         /// </summary>
         /// <param name="textToPrint">the text that will be printed either in the given color or as normal.</param>
         /// <param name="referenceText">the text to compare to the printed text.  If the two are different, the printed text will be in the given color.</param>
-        /// <param name="color">text to specify the color.  supported inputs are; defaults to green.</param>
+        /// <param name="color">text to specify the color.  supported inputs are black, blue, green, orange, purple, red, white, and yellow; defaults to green.</param>
         private string ColorTextIfDifferent(string textToPrint, string referenceText, string color = "green")
         {
             if (!color.Equals("green") && !color.Equals("black") && !color.Equals("blue") && !color.Equals("orange") && !color.Equals("purple") && !color.Equals("red")

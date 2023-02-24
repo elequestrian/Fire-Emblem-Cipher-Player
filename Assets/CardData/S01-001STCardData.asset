@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardNumber: S01-001
   charTitle: Star and Savior
-  charQuote: \"I will crush Dolhr. I swear it on this emblem of fire!\"
+  charQuote: '"I will crush Dolhr. I swear it on this emblem of fire!"'
   cardIllustrator: Yusuke Kozaki
   cardSkills:
   - Prince of Light [TRIGGER] [ONCE PER TURN] When you deploy an ally with a Deployment
