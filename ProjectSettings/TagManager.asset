@@ -11,9 +11,9 @@ TagManager:
   - 
   - Water
   - UI
+  - Playfield
   - 
-  - 
-  - 
+  - Cards
   - 
   - 
   - 
@@ -40,4 +40,10 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 2653190253
+    locked: 0
+  - name: Cards
+    uniqueID: 3887377459
     locked: 0
